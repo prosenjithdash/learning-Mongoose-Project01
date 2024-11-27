@@ -1,5 +1,3 @@
-import exp from 'constants';
-import { Schema, model, connect } from 'mongoose';
 
 
 // 1. Create an interface representing a document in MongoDB.
