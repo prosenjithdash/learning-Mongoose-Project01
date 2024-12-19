@@ -1,26 +1,50 @@
-// STUDENT SERVICE
-import { Student } from "./student.interface";
-import { StudentModel } from "./student.model";
 
 
-const createStudentIntoDB = async (student: Student) => {
-    const result = await StudentModel.create(student);
-    return result;
-}
-// business logic
+// import { Student } from './student.model';
+
+// const getAllStudentsFromDB = async () => {
+//   const result = await Student.find();
+//   return result;
+// };
+
+// const getSingleStudentFromDB = async (id: string) => {
+//   const result = await Student.aggregate([{ $match: { id } }]);
+//   return result;
+// };
+
+// const deleteStudentFromDB = async (id: string) => {
+//   const result = await Student.updateOne({ id }, { isDeleted: true });
+//   return result;
+// };
+
+// export const StudentServices = {
+//   getAllStudentsFromDB,
+//   getSingleStudentFromDB,
+//   deleteStudentFromDB,
+// };
+
+
+/////
+
+import { Student } from './student.model';
+
 const getAllStudentsFromDB = async () => {
-    const result = await StudentModel.find();
-    return result;
-}
+  const result = await Student.find();
+  return result;
+};
 
-// get single data
-const getSingleStudentFromDB = async (id:string) => {
-    const result = await StudentModel.findOne({id});
-    return result;
-}
+const getSingleStudentFromDB = async (id: string) => {
+  const result = await Student.aggregate([{ $match: { id } }]);
+  return result;
+};
+
+const deleteStudentFromDB = async (id: string) => {
+  const result = await Student.updateOne({ id }, { isDeleted: true });
+  return result;
+};
 
 export const StudentServices = {
-    createStudentIntoDB,
-    getAllStudentsFromDB,
-    getSingleStudentFromDB
-}
+  getAllStudentsFromDB,
+  getSingleStudentFromDB,
+  deleteStudentFromDB,
+};
