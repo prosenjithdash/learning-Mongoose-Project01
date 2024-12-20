@@ -141,18 +141,17 @@
 // //   deleteStudent,
 // // };
 
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import httpStatus from 'http-status';
 import sendResponse from '../../utils/sendResponse';
-
 import { StudentServices } from './student.service';
+import { error } from 'console';
+import catchAsync from '../../utils/catchAsync';
 
-const getSingleStudent = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
+
+// applied higher order function with catchAsync
+const getSingleStudent = catchAsync(async (req,res) => {
+ 
     const { studentId } = req.params;
     const result = await StudentServices.getSingleStudentFromDB(studentId);
 
@@ -162,17 +161,11 @@ const getSingleStudent = async (
       message: 'Student is retrieved succesfully',
       data: result,
     });
-  } catch (err) {
-    next(err);
-  }
-};
+  
+});
 
-const getAllStudents = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
+const getAllStudents = catchAsync(async (req,res) => {
+  
     const result = await StudentServices.getAllStudentsFromDB();
 
     sendResponse(res, {
@@ -181,15 +174,12 @@ const getAllStudents = async (
       message: 'Student are retrieved succesfully',
       data: result,
     });
-  } catch (err) {
-    next(err);
-  }
-};
+  
+});
 
-const deleteStudent = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
+const deleteStudent = catchAsync(async (
+  req,
+  res,
 ) => {
   try {
     const { studentId } = req.params;
@@ -204,7 +194,7 @@ const deleteStudent = async (
   } catch (err) {
     next(err);
   }
-};
+});
 
 export const StudentControllers = {
   getAllStudents,
